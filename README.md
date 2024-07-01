@@ -1,7 +1,49 @@
-Voltage-Costraint (Vconst) and Current Constraint (Iconst)
+===================================================
+================ Component Briefs: ================
+===================================================
 
-Installation (Two Methods)
+Vconst: Voltage-Costraint
+    Desc. :: Ideal voltage clamp. Place across two nodes and they /will not/ violate the paramter-defined constraints.
+    Notes :: See associated test-jig for netlist equivalant circuit and application
+    Params (default value) :: 
+        Vpos (10) --> positive clamping voltage at '+' terminal (pin 1) wrt bottom pin (pin 2)
+        Vneg (-10) --> negative clamping voltage at '+' terminal (pin 1) wrt bottom pin (pin 2)
+        
+Iconst: Current Constraint
+    Desc. :: Ideal current limit. Place in isolated current path and it /will not/ violate the paramter-defined constraints.
+    Notes :: See associated test-jig for netlist equivalant circuit and application
+    Params (default value) :: 
+        Isrc (3m) --> clamping threshold of conventional current flowing from bottom terminal (pin 2) through symbol to '+' terminal (pin 1)
+        Isnk (3m) --> clamping threshold of conventional current flowing from '+' terminal (pin 1) through symbol to bottom terminal (pin 2)
 
+Aol: Open-Loop Gain Plotting Utility
+    Desc. :: Test-Jig which biases OpAmp models for plotting open-loop gain charactaristics (.ac analysis only)
+    Notes :: 
+        * See associated test-jig for netlist equivalant circuit and application. 'DUT Config' in symbol for application reference
+        * Most useful for validating parameter-defined Universal OpAmp models against datasheet characteristics
+       
+Stability Analysis Diff: Loop Gain and Feedback Factor Plotting Utility
+    Desc. :: Allows determination of amplifier network stability by independant assessment of open-loop and feedback-factor small-signal characteristics
+    Notes :: 
+        * See associated test-jig for netlist equivalant circuit and application. 'DUT Config' in symbol for application reference
+        * Expression for feedback-factor must be entered into waveform viewer by user due to limitations in how SPICE handles behavioral sources
+        * Not for noise analysis - 'ideal' switches in the feedback network Roff of {1/gmin}, which is the largest simulatable thermal noise source
+        * Default parameter values chosen for OPA2810; for no particular reason other than to align with the Jigs
+        * Can be used for single-ended amplifiers by setting any 'Z' in the DUT config to short or open and/or tying one end of 'STIM' to GND
+    Quick Ref::
+        * Loop Gain = Aol * Beta = "AolB"
+        * Phase Margin = Ph(AolB) when Mag(AolB) = 0dB
+        * feedback-factor (FF) = 1 / Beta = AolB / Aol_Loaded
+        * AolB = 0dB when Aol_Loaded intersects FF
+    Params (default value) :: 
+        EN (1) --> Enables stability analysis. Setting EN=0 shorts 'FB' pins to 'PIN' pins for quickly assesing network transfer characteristic
+        CinDiff (0p5) --> Differential (closed-loop) input capacitence of amplifier being analyzed - used to inform external model of input parasitics
+        CinCM (2p5) --> Single-ended (open-loop) input capacitence of amplifier being analyzed - used to inform external model of input parasitics
+        Rin (12Gig) --> Differential (closed-loop) input resistance of amplifier being analyzed - used to inform external model of input parasitics
+        
+============================================================
+================ Installation (Two Methods) ================
+============================================================
 
 ================ Method 1 :: Integral to LTspice Library ================
 1)
