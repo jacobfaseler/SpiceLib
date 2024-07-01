@@ -1,0 +1,19 @@
+**************************************************
+* Manufacturer:           N/A 
+* Kinds:                  Test Jig
+* Library Type:           LTspice
+* Version:                1.0.0
+* Created/modified by:    Jacob Faseler      
+* Date and Time:          2024-06-26
+* Team:                   Self  
+* Contact:                jacob.faseler@gmail.com
+**************************************************
+* Copyright(C) 2024 Jacob Faseler
+* All Rights Reserved.
+**************************************************
+.subckt Aol IN+ Aol GND
+LdcBias Offset IN+ 1T Rser=10m
+CacCouple IN+ Stimulus 1T
+Vstim Stimulus GND AC 1
+E§OffsetAdj Offset GND Aol GND 1
+.ends

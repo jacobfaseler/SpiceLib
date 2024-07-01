@@ -1,0 +1,51 @@
+**************************************************
+* Manufacturer:           N/A 
+* Kinds:                  Source Constraint
+* Library Type:           LTspice
+* Version:                1.0.0
+* Created/modified by:    Jacob Faseler      
+* Date and Time:          2024-06-26
+* Team:                   Self  
+* Contact:                jacob.faseler@gmail.com
+**************************************************
+* Copyright(C) 2024 Jacob Faseler
+* All Rights Reserved.
+**************************************************
+.subckt StabilityAnalysisDiff STIMp STIMn FBp FBn PINp PINn AmpOut AolB Aol_Loaded
+CinDiffN InModelN 0 {CinDiff}
+CinCM InModelP InModelN {CinCM}
+CinDiffP 0 InModelP {CinDiff}
+Rin InModelN InModelP {Rin}
+LacBiasN CouplePointOL InModelN 1T
+LacBiasP BiasPointOL InModelP 1T
+CacCouple StimOpenLoop CouplePointOL 1T
+V3 StimOpenLoop BiasPointOL AC 1
+LdcBIAS Damp Offset 1T
+R§Ldamper BiasPointOL Damp 1m
+V§AnStim N001 N003 AC 0
+SwFBnAn FBn InModelN Ven 0 idSW
+Ven Ven 0 {StAnEn}
+SwPINnAn PINn CouplePointOL Ven 0 idSW
+SwFBpAn InModelP FBp Ven 0 idSW
+SwPINpAn BiasPointOL PINp Ven 0 idSW
+E§DiffMeasAolB GenAolB 0 FBp FBn 1
+Vdis Vdis 0 {StAnDis}
+SwFBpAn1 FBp PINp Vdis 0 idSW
+SwFBpAn2 FBn PINn Vdis 0 idSW
+E§Voffset Offset 0 FBp Aol_Loaded 1
+E§VaolLoaded GenVaolLoaded 0 AmpOut 0 1
+V§BypassStim N002 N004 AC 1
+SwAnSTIMp STIMp N001 Ven 0 idSW
+SwAnSTIMn N003 STIMn Ven 0 idSW
+SwBySTIMp STIMp N002 Vdis 0 idSW
+SwBySTIMn N004 STIMn Vdis 0 idSW
+SwFBnAn1 AolB GenAolB Ven 0 idSW
+SwFBpAn3 AolB 0 Vdis 0 idSW
+SwFBnAn2 Aol_Loaded GenVaolLoaded Ven 0 idSW
+SwFBpAn4 Aol_Loaded 0 Vdis 0 idSW
+.MODEL idSW SW(Ron={gmin})
+.PARAM StAnEn = if( EN, 1, 0)
+.PARAM StAnDis = if( EN, 0, 1)
+.param EN=1
+
+.ends

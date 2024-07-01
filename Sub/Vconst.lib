@@ -1,0 +1,22 @@
+**************************************************
+* Manufacturer:           N/A 
+* Kinds:                  Source Constraint
+* Library Type:           LTspice
+* Version:                1.0.0
+* Created/modified by:    Jacob Faseler      
+* Date and Time:          2024-06-26
+* Team:                   Self  
+* Contact:                jacob.faseler@gmail.com
+**************************************************
+* Copyright(C) 2024 Jacob Faseler
+* All Rights Reserved.
+**************************************************
+.subckt Vconst 1 2
+V1 p 2 {Vpos}
+D1 1 p ID
+D2 2 n ID
+V2 1 n {Vneg}
+R2 n 2 {1/gmin}
+R1 1 p {1/gmin}
+.MODEL ID D(Ron=0 Roff={1/gmin} Vfwd=0)
+.ends
