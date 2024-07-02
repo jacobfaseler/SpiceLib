@@ -48,7 +48,7 @@ Quick Ref::
 
 * Loop Gain = Aol * Beta = "AolB"
 * Phase Margin = Ph(AolB) when Mag(AolB) = 0dB
-* feedback-factor (FF) = 1 / Beta = AolB / Aol_Loaded
+* feedback-factor = "FF" = 1 / Beta = AolB / Aol_Loaded
 * AolB = 0dB when Aol_Loaded intersects FF
 
 Params (default value) ::
